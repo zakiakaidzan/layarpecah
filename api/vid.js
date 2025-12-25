@@ -1,30 +1,26 @@
-const axios = require("axios");
+import axios from "axios";
 
-async function getCookies() {
+export default async function handler(req, res) {
   try {
-    const response = await axios.get("https://console.upstash.com/auth/sign-up", {
-      withCredentials: true,
-      validateStatus: () => true, // biar tidak error kalau status bukan 200
+    const response = await axios.get("https://example.com", {
+      validateStatus: () => true,
+      headers: {
+        "User-Agent": "Mozilla/5.0"
+      }
     });
 
-    const rawCookies = response.headers["set-cookie"] || [];
+    // Ambil cookie mentah
+    const cookies = response.headers["set-cookie"] || [];
 
-    // ubah cookie ke bentuk JSON
-    const cookies = rawCookies.map(cookie => {
-      const parts = cookie.split(";");
-      const [name, value] = parts[0].split("=");
-
-      return {
-        name: name.trim(),
-        value: value?.trim() || "",
-        raw: cookie
-      };
+    res.status(200).json({
+      success: true,
+      cookies
     });
 
-    console.log(JSON.stringify(cookies, null, 2));
-  } catch (error) {
-    console.error("Gagal ambil cookie:", error.message);
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
   }
 }
-
-getCookies();
