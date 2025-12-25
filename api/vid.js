@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   try {
-    const response = await axios.get("https://example.com", {
+    const response = await axios.get("https://console.upstash.com/auth/sign-up", {
       validateStatus: () => true,
       headers: {
         "User-Agent": "Mozilla/5.0"
