@@ -1,4 +1,4 @@
 // api/serverurl.js
 
-const targetUrl = 'https://new11.ngefilm21.yachts/';
+const targetUrl = 'https://mpgrandprix.com/';
 module.exports = targetUrl;
